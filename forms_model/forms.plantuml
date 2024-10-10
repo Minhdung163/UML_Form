@@ -29,8 +29,8 @@ class forms{
     -UUID state_id
 }
 
-forms -left-> formhistories : submit a form to the system
-formhistories -up-> formrequests : send request to the system
+forms -left-> formhistories : **submit a form**
+formhistories -up-> formrequests : **send a request**
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'Forms categorization
@@ -42,14 +42,26 @@ class formtypes{
     -String name_en
 }
 
+note right of formtypes
+    2 types:
+    - Žádost
+    - Zadání DP
+end note
+
 class formcategories{
     -UUID id
     -String name
     -String name_en
 }
 
-forms -right-> formtypes : determine form's types
-formtypes -up-> formcategories : categorize form's types
+note right of formcategories
+    2 categories:
+    - Studentské žádosti
+    - Ostatní
+end note
+
+forms -right-> formtypes : **determine form's types**
+formtypes -up-> formcategories : **categorize form's types**
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'Parts of a form
@@ -89,9 +101,9 @@ class formitems{
     -UUID type_id
 }
 
-formsections -up-> forms : all sections belong to a form
-formparts -up-> formsections : all parts belong to a section
-formitems -up-> formparts : all items belong to a part
+formsections -up-> forms : **all sections belong to a form**
+formparts -up-> formsections : **all parts belong to a section**
+formitems -up-> formparts : **all items belong to a part**
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 'Form item categorization
@@ -104,12 +116,25 @@ class formitemtypes{
     -String selector
 }
 
+note right of formitemtypes
+    4 types:
+    - student
+    - program
+    - obsah
+    - doporučení
+end note
+
 class formitemcategories{
     -UUID id
     -String name
     -String name_en
 }
+note right of formitemcategories
+    2 categories:
+    - Text
+    - GQL_API
+end note
 
-formitems -right-> formitemtypes : determine form item's types
-formitemtypes -up-> formitemcategories : categorize form item's types
+formitems -right-> formitemtypes : **determine form item's types**
+formitemtypes -up-> formitemcategories : **categorize form item's types**
 @enduml
