@@ -1,0 +1,115 @@
+@startuml class_diagram
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'Request
+
+class formrequests{
+    -UUID id
+    -DateTime created
+    -DateTime lastchange
+    -String name
+    -UUID rbacobject
+    -UUID state_id
+}
+
+class formhistories{
+    -UUID id
+    -DateTime created
+    -DateTime lastchange
+    -String name
+    -UUID request_id
+    -UUID form_id
+}
+
+class forms{
+    -UUID id
+    -DateTime created
+    -DateTime lastchange
+    -String name
+    -UUID rbacobject
+    -UUID state_id
+}
+
+forms -left-> formhistories : submit a form to the system
+formhistories -up-> formrequests : send request to the system
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'Forms categorization
+
+class formtypes{
+    -UUID id
+    -UUID category_id
+    -String name
+    -String name_en
+}
+
+class formcategories{
+    -UUID id
+    -String name
+    -String name_en
+}
+
+forms -right-> formtypes : determine form's types
+formtypes -up-> formcategories : categorize form's types
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'Parts of a form
+
+class formsections{
+    -UUID id
+    -DateTime created
+    -DateTime lastchange
+    -String name
+    -Int order
+    -UUID rbacobject
+    -UUID form_id
+    -UUID state_id
+}
+
+class formparts{
+    -UUID id
+    -DateTime created
+    -DateTime lastchange
+    -String name
+    -Int order
+    -UUID rbacobject
+    -UUID section_id
+    -UUID state_id
+}
+
+class formitems{
+    -UUID id
+    -DateTime created
+    -DateTime lastchange
+    -String name
+    -Int order
+    -UUID value
+    -UUID rbacobject
+    -UUID part_id
+    -UUID state_id
+    -UUID type_id
+}
+
+formsections -up-> forms : all sections belong to a form
+formparts -up-> formsections : all parts belong to a section
+formitems -up-> formparts : all items belong to a part
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'Form item categorization
+
+class formitemtypes{
+    -UUID id
+    -UUID category_id
+    -String name
+    -String query
+    -String selector
+}
+
+class formitemcategories{
+    -UUID id
+    -String name
+    -String name_en
+}
+
+formitems -right-> formitemtypes : determine form item's types
+formitemtypes -up-> formitemcategories : categorize form item's types
+@enduml
